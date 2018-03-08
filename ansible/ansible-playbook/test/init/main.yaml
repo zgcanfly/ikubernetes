@@ -1,0 +1,79 @@
+---
+# init centos7 ansible script
+- hosts: test
+  sudo: yes
+  sudo_user: root
+  tasks:
+  - name: yum install epel
+    yum: name=epel-release state=present
+  - name: yum install xxx
+    yum: state=present name={{ item }}
+    with_items:
+    - htop
+    - python-pip
+    - vim 
+    - git
+    - screen
+    - svn
+    - iftop
+    - wget
+    - dstat
+    - krb5-devel
+    - gzip
+    - tmux
+    - openssl
+    - openssl-devel
+    - nfs-utils
+    - psmisc
+    when: ansible_os_family == "CentOS"
+  - name: close firewalld
+    service: name=firewalld state=stopped
+  - name: create ssh dir root
+    file:
+      path: ~/.ssh
+      owner: root
+      recurse: yes
+  - name: create centos user
+    user: "name=centos shell=/bin/bash  password=ddxd2015"
+  - name:  mkdir for centos
+    file: path={{ item }}  owner=centos group=centos state=directory
+    with_items:
+    - ~centos/.ssh
+    - /opt/docker
+    - /opt/local
+    - /data/log
+    - /data/tmp
+    - /data/backup
+    - /data/www
+    - /data/db
+    - /data/db/mongo
+  - name: copy files for centos
+    copy: src={{ item.src }} dest={{item.dest}} owner=centos
+    with_items:
+    - { src: '/opt/sg_deploy/ansible/files/env/authorized_keys', dest: '~centos/.ssh/authorized_keys' }
+    - { src: '/opt/sg_deploy/ansible/files/vim/vimrc', dest: '~centos/.vimrc' }
+    - { src: '/opt/sg_deploy/ansible/files/env/bashrc', dest: '~centos/.bashrc' }
+    - { src: '/opt/sg_deploy/ansible/files/env/config', dest: '~centos/.ssh/config' }
+
+  - name: copy files for root
+    copy: src={{ item.src }} dest={{item.dest}} owner=root
+    with_items:
+    - { src: '/opt/sg_deploy/ansible/files/env/authorized_keys', dest: '~/.ssh/authorized_keys' }
+    - { src: '/opt/sg_deploy/ansible/files/vim/vimrc', dest: '~/.vimrc' }
+    - { src: '/opt/sg_deploy/ansible/files/env/bashrc', dest: '~/.bashrc' }
+    - { src: '/opt/sg_deploy/ansible/files/env/config', dest: '~/.ssh/config' }
+
+
+  - name: deploy system env
+    copy: src={{ item.src }} dest={{item.dest}} owner=root
+    with_items:
+    - { src: '/opt/sg_deploy/ansible/files/ssh/ssh_config', dest: '/etc/ssh/ssh_config' }
+    - { src: '/opt/sg_deploy/ansible/files/ssh/sshd_config', dest: '/etc/ssh/sshd_config' }
+    - { src: '/opt/sg_deploy/ansible/files/env/issue', dest: '/etc/issue' }
+    - { src: '/opt/sg_deploy/ansible/files/env/sudoers', dest: '/etc/sudoers' }
+    - { src: '/opt/sg_deploy/ansible/files/env/hosts', dest: '/etc/hosts' }
+
+
+
+
+

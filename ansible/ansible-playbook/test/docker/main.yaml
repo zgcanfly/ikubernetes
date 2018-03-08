@@ -1,0 +1,39 @@
+---
+# init centos7 docker
+- hosts: test
+  sudo: yes
+  sudo_user: root
+  tasks:
+  - name: yum install epel
+    yum: name=epel-release state=present
+  - name: yum remove old docker
+    yum: state=absent name={{ item }}
+    with_items:
+    - docker
+    - docker-common
+    - docker-selinux
+    - docker-engine
+    when: ansible_os_family == "CentOS"
+  - name: yum install yum-tools
+    yum: state=present name={{ item }}
+    with_items:
+    - yum-utils
+    - device-mapper-persistent-data
+    - lvm2
+    when: ansible_os_family == "CentOS"
+  - name: get docker-ce repo.file
+    get_url: url=https://download.docker.com/linux/centos/docker-ce.repo dest=/etc/yum.repos.d/docker-ce.repo
+  - name: yum install docker-ce python-pip
+    yum: state=present name={{ item }}
+    with_items:
+    - docker-ce
+    - python-pip
+  - name: install docker-compose 
+    shell: pip install docker-compose
+  - name: copy config for  docker
+    copy: src=/opt/sg_deploy/ansible/files/docker/docker.service dest=/etc/systemd/system/docker.service
+  - name: ensure docker serivce enable
+    service: name=docker state=started enabled=True
+    handlers:
+    - name: restart docker
+      service: name=docker state=restart

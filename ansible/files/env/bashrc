@@ -1,0 +1,14 @@
+export EDITOR=vim
+export VISUAL=vim
+export LC_ALL=C
+alias npm='npm --registry=https://registry.npm.taobao.org'
+alias pm2="pm2 --log-date-format 'YYYY-MM-DDTHH:mm:ssZ'"
+if [ -f /etc/bashrc ]; then
+. /etc/bashrc
+fi
+#export PS1='[\u@dev \W]\$ '
+
+alias redis-cli='redis-cli --raw' #让redis-cli正常显示中文
+export NVM_DIR="$HOME/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion

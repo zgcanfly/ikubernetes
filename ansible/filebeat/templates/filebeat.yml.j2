@@ -1,0 +1,55 @@
+filebeat.prospectors:
+
+#- input_type: log
+#  paths:
+#    - /var/log/*.log
+#  document_type: systemlog
+#  fields:
+#     logtype: systemlog
+#     appserver: {{ ansible_hostname }}
+
+- input_type: log
+  paths:
+    - /var/log/nginx/*.log
+  document_type: nginx-access-log
+  fields:
+     logtype: nginxaccesslog
+     appserver: {{ ansible_hostname }}
+
+- input_type: log
+  paths:
+    - /var/log/php5.6-fpm.log
+    - /var/log/php_errors.log
+    - /var/log/fpm-php.www.log
+  document_type: php-log
+  fields:
+     logtype: phplog
+     appserver: {{ ansible_hostname }}
+  multiline:
+    #pattern: 'PHP ([^:]+) error:|PHP Deprecated:|PHP Strict standards:|executing too slow|exited with code 0 after'
+    pattern: 'PHP ([^:]+)( ([^:]+))*:  |executing too slow|exited with code 0 after'
+    match: after
+    negate: true
+    max_lines: 500
+    timeout: 5s
+
+- input_type: log
+  paths:
+    - /var/log/tomcat7/catalina.out
+    - /var/log/tomcat7/catalina.*.log
+    - /var/log/tomcat7/romeo/romeo.log
+  document_type: tomcat-log
+  fields:
+     logtype: tomcatlog
+     appserver: {{ ansible_hostname }}
+  multiline:
+    pattern: '^Jan^Feb|^Mar|^Apr|^May|^Jun|^Jul|^Aug|^Sept|^Oct|^Nov|^Dec|^Mon|^dsno value:|^creating|^false|^true|^providerId|^INSERT|^Global|^Generating'
+    pattern: '^[A-Z][a-z]{2} [A-Z][a-z]{2} [0-9]{2} [0-9]{2}:[0-9]{2}:[0-9]{2} GMT|^dsno value:|^creating|^false|^true|^providerId|^INSERT|^Global|^Generating|^[0-9]{4}-[0-9]{2}-[0-9]{2} [0-9]{2}:[0-9]{2}:[0-9]{2}'
+    match: after
+    negate: true
+    max_lines: 500
+    timeout: 5s
+
+output:
+  logstash:
+    hosts: ["{{ filebeat_host }}:{{ filebeat_port }}"]

@@ -1,0 +1,5 @@
+[vagrant]
+lv ansible_host=192.168.1.218 ansible_port=22 ansible_password=vagrant
+
+[erphost]
+hz141 ansible_host=localhost ansible_port=52003

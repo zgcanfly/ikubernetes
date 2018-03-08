@@ -1,0 +1,39 @@
+---
+- hosts: erphost
+  vars:
+    filebeat_host: 192.168.0.4
+    filebeat_port: 5044
+  remote_user: yzhang
+  become: true
+  tasks:
+  - name: "Ensure elasticsearch key is present"
+    apt_key:
+      url: "https://artifacts.elastic.co/GPG-KEY-elasticsearch"
+      state: present
+    when: ansible_os_family == "Debian"
+  - name: install apt-transport-https
+    apt: name={{ item }} update_cache=yes state=installed
+    with_items:
+      - apt-transport-https
+  - apt_repository:
+      repo: deb https://artifacts.elastic.co/packages/5.x/apt stable main
+      state: present
+      filename: 'elastic-5.x'
+    when: ansible_os_family == "Debian"
+  - name: ensure filebeat is at the latest version
+    apt: name=filebeat update_cache=yes state=latest
+  - name: write the filebeat config file
+    template:
+      src: filebeat.yml.j2
+      dest: /etc/filebeat/filebeat.yml
+    notify:
+    - restart filebeat
+  - name: ensure filebeat is running
+    service:
+      name: filebeat
+      state: started
+  handlers:
+    - name: restart filebeat
+      service:
+        name: filebeat
+        state: restarted

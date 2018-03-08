@@ -1,0 +1,5 @@
+cront use age:
+create cront
+ansible test -m cron -a "name=check minute=5 job='crontab -l >>/root/123'"
+delete cront
+ansible test -m cron -a "name=check state=absent"
