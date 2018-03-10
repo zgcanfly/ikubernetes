@@ -31,7 +31,22 @@
   - name: copy config for  docker
     copy: src=/opt/sg_deploy/ansible/files/docker/docker.service dest=/etc/systemd/system/docker.service
   - name: ensure docker serivce enable
-    service: name=docker state=started enabled=True
-    handlers:
+  - name: deploy mongodb
+    copy: src={{ item.src }} dest={{item.dest}} owner=centos mode=755
+    with_items:
+    - { src: '/opt/sg_deploy/ansible/files/mongo/bin/mongo', dest: '/usr/local/bin/mongo' }
+    - { src: '/opt/sg_deploy/ansible/files/mongo/bin/bsondump', dest: '/usr/local/bin/bsondump' }
+    - { src: '/opt/sg_deploy/ansible/files/mongo/bin/mongod', dest: '/usr/local/bin/mongod' }
+    - { src: '/opt/sg_deploy/ansible/files/mongo/bin/mongodump', dest: '/usr/local/bin/mongodump' }
+    - { src: '/opt/sg_deploy/ansible/files/mongo/bin/mongoexport', dest: '/usr/local/bin/mongoexport' }
+    - { src: '/opt/sg_deploy/ansible/files/mongo/bin/mongofiles', dest: '/usr/local/bin/mongofiles' }
+    - { src: '/opt/sg_deploy/ansible/files/mongo/bin/mongoimport', dest: '/usr/local/bin/mongoimport' }
+    - { src: '/opt/sg_deploy/ansible/files/mongo/bin/mongooplog', dest: '/usr/local/bin/mongooplog' }
+    - { src: '/opt/sg_deploy/ansible/files/mongo/bin/mongoperf', dest: '/usr/local/bin/mongoperf' }
+    - { src: '/opt/sg_deploy/ansible/files/mongo/bin/mongorestore', dest: '/usr/local/bin/mongorestore' }
+    - { src: '/opt/sg_deploy/ansible/files/mongo/bin/mongos', dest: '/usr/local/bin/mongos' }
+    - { src: '/opt/sg_deploy/ansible/files/mongo/bin/mongostat', dest: '/usr/local/bin/mongostat' }
+    - { src: '/opt/sg_deploy/ansible/files/mongo/bin/mongotop', dest: '/usr/local/bin/mongotop' }
+    - { src: '/opt/sg_deploy/ansible/files/mongo/conf/mongod.conf', dest: '/etc/mongod.conf' }
     - name: restart docker
       service: name=docker state=restart
