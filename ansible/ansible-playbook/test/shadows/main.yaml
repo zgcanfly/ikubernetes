@@ -1,52 +1,22 @@
 ---
-# init centos7 docker
+# install shadows ,docker-ce
 - hosts: test
   sudo: yes
   sudo_user: root
   tasks:
-  - name: yum install epel
-    yum: name=epel-release state=present
-  - name: yum remove old docker
-    yum: state=absent name={{ item }}
+  - name:  mkdir for shadows
+      file: path={{ item }} state=directory
+      with_items:
+      - /etc/shadowsocks/
+  - name: deploy shadows
     with_items:
-    - docker
-    - docker-common
-    - docker-selinux
-    - docker-engine
-  - name: yum install yum-tools
-    yum: state=present name={{ item }}
-    with_items:
-    - yum-utils
-    - device-mapper-persistent-data
-    - lvm2
-  - name: get docker-ce repo.file
-    get_url: url=https://download.docker.com/linux/centos/docker-ce.repo dest=/etc/yum.repos.d/docker-ce.repo
-  - name: yum install docker-ce python-pip
-    yum: state=present name={{ item }}
-    with_items:
-    - docker-ce
-    - python-pip
-  - name: install docker-compose
-    shell: pip install docker-compose
-  - name: copy config for  docker
-    copy: src=/opt/sg_deploy/ansible/files/docker/docker.service dest=/etc/systemd/system/docker.service
-  - name: ensure docker serivce enable
-  - name: deploy mongodb
-    copy: src={{ item.src }} dest={{item.dest}} owner=centos mode=755
-    with_items:
-    - { src: '/opt/sg_deploy/ansible/files/mongo/bin/mongo', dest: '/usr/local/bin/mongo' }
-    - { src: '/opt/sg_deploy/ansible/files/mongo/bin/bsondump', dest: '/usr/local/bin/bsondump' }
-    - { src: '/opt/sg_deploy/ansible/files/mongo/bin/mongod', dest: '/usr/local/bin/mongod' }
-    - { src: '/opt/sg_deploy/ansible/files/mongo/bin/mongodump', dest: '/usr/local/bin/mongodump' }
-    - { src: '/opt/sg_deploy/ansible/files/mongo/bin/mongoexport', dest: '/usr/local/bin/mongoexport' }
-    - { src: '/opt/sg_deploy/ansible/files/mongo/bin/mongofiles', dest: '/usr/local/bin/mongofiles' }
-    - { src: '/opt/sg_deploy/ansible/files/mongo/bin/mongoimport', dest: '/usr/local/bin/mongoimport' }
-    - { src: '/opt/sg_deploy/ansible/files/mongo/bin/mongooplog', dest: '/usr/local/bin/mongooplog' }
-    - { src: '/opt/sg_deploy/ansible/files/mongo/bin/mongoperf', dest: '/usr/local/bin/mongoperf' }
-    - { src: '/opt/sg_deploy/ansible/files/mongo/bin/mongorestore', dest: '/usr/local/bin/mongorestore' }
-    - { src: '/opt/sg_deploy/ansible/files/mongo/bin/mongos', dest: '/usr/local/bin/mongos' }
-    - { src: '/opt/sg_deploy/ansible/files/mongo/bin/mongostat', dest: '/usr/local/bin/mongostat' }
-    - { src: '/opt/sg_deploy/ansible/files/mongo/bin/mongotop', dest: '/usr/local/bin/mongotop' }
-    - { src: '/opt/sg_deploy/ansible/files/mongo/conf/mongod.conf', dest: '/etc/mongod.conf' }
-    - name: restart docker
-      service: name=docker state=restart
+    - { src: '/opt/ikubernetes/ansible/shadows/shadowsocks.json', dest: '/etc/shadowsocks/shadowsocks.json' }
+    - { src: '/opt/ikubernetes/ansible/shadows/proxychains.conf', dest: '/usr/local/etc/proxychains.conf' }
+    - { src: '/opt/ikubernetes/ansible/shadows/ss', dest: '/usr/local/bin/ss' }
+    - { src: '/opt/ikubernetes/ansible/shadows/sslocal', dest: '/usr/local/bin/sslocal' }
+    - { src: '/opt/ikubernetes/ansible/shadows/proxychains.tar.gz', dest: '/tmp/proxychains.tar.gz' }
+  - name: unpack proxychains
+    shell: 'cd /tmp/ && tar xf proxychains.tar.gz && cd proxychains '
+
+  - name: restart docker
+    service: name=docker state=restart
