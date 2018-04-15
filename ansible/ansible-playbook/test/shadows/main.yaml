@@ -19,5 +19,7 @@
     - { src: '/opt/ikubernetes/ansible/files/shadows/sslocal', dest: '/usr/local/bin/sslocal' }
     - { src: '/opt/ikubernetes/ansible/files/shadows/libproxychains4.so', dest: '/usr/local/lib/libproxychains4.so' }
     - { src: '/opt/ikubernetes/ansible/files/rc.local', dest: '/etc/rc.local' }
-  - name:
+  - name: 开机自启权限设置
+    file: path=/etc/rc.d/rc.local mode=777
+  - name: 启动ss
     shell: /usr/local/bin/ss &
