@@ -10,7 +10,7 @@
     - /etc/shadowsocks/
 
   - name: deploy shadows
-    copy: src={{ item.src }} dest={{item.dest}} mode=777  owner=root group=root
+    copy: src={{ item.src }} dest={{item.dest}} mode=777  owner=root group=root backup=yes
     with_items:
     - { src: '/opt/ikubernetes/ansible/files/shadows/shadowsocks.json', dest: '/etc/shadowsocks/shadowsocks.json' }
     - { src: '/opt/ikubernetes/ansible/files/shadows/proxychains.conf', dest: '/usr/local/etc/proxychains.conf' }
