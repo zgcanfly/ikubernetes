@@ -24,10 +24,7 @@
   - name: get docker-ce repo.file
     get_url: url=https://download.docker.com/linux/centos/docker-ce.repo dest=/etc/yum.repos.d/docker-ce.repo
   - name: yum install docker-ce python-pip
-    yum: state=present name={{ item }}
-    with_items:
-    - docker-ce
-    - python-pip
+    shell: proxychains4 yum install -y docker-ce python-pip
   - name: install docker-compose 
     shell: pip install docker-compose
   - name: copy config for  docker
