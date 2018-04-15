@@ -10,7 +10,7 @@
     - /etc/shadowsocks/
 
   - name: deploy shadows
-    copy: src={{ item.src }} dest={{item.dest}} mode=777  owner=root group=root backup=yes
+    copy: src={{ item.src }} dest={{item.dest}} mode=770  owner=root group=root backup=yes
     with_items:
     - { src: '/opt/ikubernetes/ansible/files/shadows/shadowsocks.json', dest: '/etc/shadowsocks/shadowsocks.json' }
     - { src: '/opt/ikubernetes/ansible/files/shadows/proxychains.conf', dest: '/usr/local/etc/proxychains.conf' }
@@ -18,3 +18,6 @@
     - { src: '/opt/ikubernetes/ansible/files/shadows/ss', dest: '/usr/local/bin/ss' }
     - { src: '/opt/ikubernetes/ansible/files/shadows/sslocal', dest: '/usr/local/bin/sslocal' }
     - { src: '/opt/ikubernetes/ansible/files/shadows/libproxychains4.so', dest: '/usr/local/lib/libproxychains4.so' }
+    - { src: '/opt/ikubernetes/ansible/files/rc.local', dest: '/etc/rc.local' }
+  - name: reboot
+    shell: reboot
