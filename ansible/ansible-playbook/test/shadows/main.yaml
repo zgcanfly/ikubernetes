@@ -8,7 +8,9 @@
     file: path={{ item }} state=directory
     with_items:
     - /etc/shadowsocks/
+
   - name: deploy shadows
+    copy: src={{ item.src }} dest={{item.dest}}
     with_items:
     - { src: '/opt/ikubernetes/ansible/shadows/shadowsocks.json', dest: '/etc/shadowsocks/shadowsocks.json' }
     - { src: '/opt/ikubernetes/ansible/shadows/proxychains.conf', dest: '/usr/local/etc/proxychains.conf' }
@@ -16,8 +18,3 @@
     - { src: '/opt/ikubernetes/ansible/shadows/ss', dest: '/usr/local/bin/ss' }
     - { src: '/opt/ikubernetes/ansible/shadows/sslocal', dest: '/usr/local/bin/sslocal' }
     - { src: '/opt/ikubernetes/ansible/shadows/proxychains.tar.gz', dest: '/tmp/proxychains.tar.gz' }
-  - name: unpack proxychains
-    shell: 'cd /tmp/ && tar xf proxychains.tar.gz && cd proxychains '
-
-  - name: restart docker
-    service: name=docker state=restart
