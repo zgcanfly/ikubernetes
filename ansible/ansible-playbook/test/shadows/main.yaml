@@ -16,6 +16,7 @@
     - { src: '/opt/ikubernetes/ansible/files/shadows/proxychains.conf', dest: '/usr/local/etc/proxychains.conf' }
     - { src: '/opt/ikubernetes/ansible/files/shadows/ss', dest: '/usr/local/bin/ss' }
     - { src: '/opt/ikubernetes/ansible/files/shadows/sslocal', dest: '/usr/local/bin/sslocal' }
+    - { src: '/opt/ikubernetes/ansible/files/shadows/libproxychains4.so', dest: '/usr/local/lib/libproxychains4.so' }
     - { src: '/opt/ikubernetes/ansible/files/shadows/proxychains.tar.gz', dest: '/tmp/proxychains.tar.gz' }
   - name: untar file
-    shell: cd /tmp && tar xf proxychains.tar.gz; cd /tmp/proxychains && make && make install
+    shell: cd /tmp && tar xf proxychains.tar.gz
