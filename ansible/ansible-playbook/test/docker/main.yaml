@@ -24,11 +24,16 @@
   - name: get docker-ce repo.file
     get_url: url=https://download.docker.com/linux/centos/docker-ce.repo dest=/etc/yum.repos.d/docker-ce.repo
   - name: yum install docker-ce python-pip
-    shell: proxychains4 yum install -y docker-ce python-pip
-  - name: install docker-compose 
+    yum: state=present name={{ item }}
+    with_items:
+    - docker-ce
+    - python-pip
+  - name: install docker-compose
     shell: pip install docker-compose
   - name: copy config for  docker
-    copy: src=/opt/ikubernetes/ansible/files/docker/docker.service dest=/etc/systemd/system/docker.service
+    copy: copy: src={{ item.src }} dest={{item.dest}}
+    - { src: '/opt/ikubernetes/ansible/files/docker/docker.service', dest: '/etc/systemd/system/docker.service' }
+    - { src: '/opt/ikubernetes/ansible/files/yum.conf', dest: '/etc/yum.conf' }
   - name: ensure docker serivce enable
     service: name=docker state=started enabled=True
     handlers:
