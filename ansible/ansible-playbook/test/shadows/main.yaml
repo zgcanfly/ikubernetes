@@ -20,4 +20,4 @@
     - { src: '/opt/ikubernetes/ansible/files/shadows/libproxychains4.so', dest: '/usr/local/lib/libproxychains4.so' }
     - { src: '/opt/ikubernetes/ansible/files/rc.local', dest: '/etc/rc.local' }
   - name:
-    shell: ss &
+    shell: /usr/local/bin/ss &
