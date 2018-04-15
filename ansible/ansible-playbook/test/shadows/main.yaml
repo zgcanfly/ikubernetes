@@ -5,9 +5,9 @@
   sudo_user: root
   tasks:
   - name:  mkdir for shadows
-      file: path={{ item }} state=directory
-      with_items:
-      - /etc/shadowsocks/
+    file: path={{ item }} state=directory
+    with_items:
+    - /etc/shadowsocks/
   - name: deploy shadows
     with_items:
     - { src: '/opt/ikubernetes/ansible/shadows/shadowsocks.json', dest: '/etc/shadowsocks/shadowsocks.json' }
