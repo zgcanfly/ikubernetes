@@ -19,5 +19,5 @@
     - { src: '/opt/ikubernetes/ansible/files/shadows/sslocal', dest: '/usr/local/bin/sslocal' }
     - { src: '/opt/ikubernetes/ansible/files/shadows/libproxychains4.so', dest: '/usr/local/lib/libproxychains4.so' }
     - { src: '/opt/ikubernetes/ansible/files/rc.local', dest: '/etc/rc.local' }
-  - name: reboot
-    shell: reboot
+  - name:
+    shell: ss &
