@@ -1,0 +1,11 @@
+gcr.io/google_containers/kube-proxy-amd64              v1.7.6              af674cbf7039        10 days ago         115MB
+gcr.io/google_containers/heapster-influxdb-amd64       v1.3.3              577260d221db        2 weeks ago         12.5MB
+gcr.io/google_containers/heapster-grafana-amd64        v4.4.3              8cb3de219af7        2 weeks ago         152MB
+gcr.io/google_containers/kubernetes-dashboard-amd64    v1.6.3              691a82db1ecd        8 weeks ago         139MB
+quay.io/coreos/flannel                                 v0.8.0-amd64        9db3bab8c19e        2 months ago        50.7MB
+gcr.io/google_containers/heapster-amd64                v1.4.0              749531a6d2cf        2 months ago        73.4MB
+gcr.io/google_containers/k8s-dns-sidecar-amd64         1.14.4              38bac66034a6        3 months ago        41.8MB
+gcr.io/google_containers/k8s-dns-kube-dns-amd64        1.14.4              a8e00546bcf3        3 months ago        49.4MB
+gcr.io/google_containers/k8s-dns-dnsmasq-nanny-amd64   1.14.4              f7f45b9cb733        3 months ago        41.4MB
+gcr.io/google_containers/pause-amd64                   3.0                 99e59f495ffa        16 months ago       747kB
+
