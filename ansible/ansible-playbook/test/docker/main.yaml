@@ -14,7 +14,6 @@
     - docker-common
     - docker-selinux
     - docker-engine
-    when: ansible_os_family == "CentOS"
   - name: yum install yum-tools
     yum: state=present name={{ item }}
     with_items:
