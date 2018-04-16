@@ -1,0 +1,592 @@
+1.修改hostname and hosts for all machine
+
+
+使用命令行安装 kubectl
+    curl -LO https://storage.googleapis.com/kubernetes-release/release/v1.7.0/bin/linux/amd64/kubectl
+
+    chmod +x ./kubectl
+
+    mv kubectl  /usr/local/bin/
+
+yum install kubeadm kubelet
+
+    vim /etc/yum.repos.d/kubernetes.repo
+
+[kubernetes]
+name=Kubernetes
+baseurl=https://mirrors.aliyun.com/kubernetes/yum/repos/kubernetes-el7-x86_64
+enabled=1
+gpgcheck=0
+
+修改kubelet配置，启动kubelet(所有节点)
+vim /etc/systemd/system/kubelet.service.d/10-kubeadm.conf
+
+
+    Environment="KUBELET_CGROUP_ARGS=--cgroup-driver=cgroupfs"
+
+
+    for i in `cat m-images.txt |awk '{print $1":"$2}'|awk -F "/" '{print "repo.stockalert.cn/devops/"$NF}'` ;do docker pull $i ;done
+
+ 下载镜像:master-images.txt 并转换
+redis                                                     latest              b6dddb991dfa        4 days ago          107MB
+gcr.io/google_containers/kube-apiserver-amd64             latest              f15a956e781d        12 days ago         186MB
+gcr.io/google_containers/kube-apiserver-amd64             v1.7.6              f15a956e781d        12 days ago         186MB
+gcr.io/google_containers/heapster-influxdb-amd64          v1.3.3              577260d221db        2 weeks ago         12.5MB
+gcr.io/google_containers/heapster-grafana-amd64           v4.4.3              8cb3de219af7        2 weeks ago         152MB
+quay.io/calico/node                                       latest              7643422fdf0f        7 weeks ago         277MB
+quay.io/calico/node                                       v2.4.1              7643422fdf0f        7 weeks ago         277MB
+gcr.io/google_containers/kube-controller-manager-amd64    latest              d014f402b272        7 weeks ago         138MB
+gcr.io/google_containers/kube-controller-manager-amd64    v1.7.3              d014f402b272        7 weeks ago         138MB
+gcr.io/google_containers/kube-controller-manager-amd64    v1.7.6              d014f402b272        7 weeks ago         138MB
+gcr.io/google_containers/kube-apiserver-amd64             v1.7.3              a1cc3a3d8d0d        7 weeks ago         186MB
+gcr.io/google_containers/kube-scheduler-amd64             latest              51967bf607d3        7 weeks ago         77.2MB
+gcr.io/google_containers/kube-scheduler-amd64             v1.7.3              51967bf607d3        7 weeks ago         77.2MB
+gcr.io/google_containers/kube-scheduler-amd64             v1.7.6              51967bf607d3        7 weeks ago         77.2MB
+gcr.io/google_containers/kube-proxy-amd64                 latest              54d2a8698e3c        7 weeks ago         115MB
+gcr.io/google_containers/kube-proxy-amd64                 v1.7.3              54d2a8698e3c        7 weeks ago         115MB
+gcr.io/google_containers/kube-proxy-amd64                 v1.7.6              54d2a8698e3c        7 weeks ago         115MB
+gcr.io/google_containers/kubernetes-dashboard-amd64       v1.6.3              691a82db1ecd        8 weeks ago         139MB
+quay.io/calico/cni                                        latest              5aba6ad2b79d        2 months ago        70.3MB
+quay.io/calico/cni                                        v1.10.0             5aba6ad2b79d        2 months ago        70.3MB
+quay.io/coreos/flannel                                    v0.8.0-amd64        9db3bab8c19e        2 months ago        50.7MB
+gcr.io/google_containers/heapster-amd64                   v1.4.0              749531a6d2cf        2 months ago        73.4MB
+gcr.io/google_containers/k8s-dns-sidecar-amd64            1.14.4              38bac66034a6        3 months ago        41.8MB
+gcr.io/google_containers/k8s-dns-sidecar-amd64            latest              38bac66034a6        3 months ago        41.8MB
+gcr.io/google_containers/k8s-dns-kube-dns-amd64           1.14.4              a8e00546bcf3        3 months ago        49.4MB
+gcr.io/google_containers/k8s-dns-kube-dns-amd64           latest              a8e00546bcf3        3 months ago        49.4MB
+gcr.io/google_containers/k8s-dns-dnsmasq-nanny-amd64      1.14.4              f7f45b9cb733        3 months ago        41.4MB
+gcr.io/google_containers/k8s-dns-dnsmasq-nanny-amd64      latest              f7f45b9cb733        3 months ago        41.4MB
+gcr.io/google_containers/etcd-amd64                       3.0.17              243830dae7dd        7 months ago        169MB
+gcr.io/google_containers/etcd-amd64                       latest              243830dae7dd        7 months ago        169MB
+quay.io/calico/kube-policy-controller                     latest              c2f4eeef05f8        10 months ago       31.4MB
+quay.io/calico/kube-policy-controller                     v0.7.0              c2f4eeef05f8        10 months ago       31.4MB
+gcr.io/google_containers/pause-amd64                      3.0                 99e59f495ffa        17 months ago       747kB
+gcr.io/google_containers/pause-amd64                      latest              99e59f495ffa        17 months ago       747kB
+
+    for i in `cat n-images.txt |awk '{print $1":"$2}'|awk -F "/" '{print "repo.stockalert.cn/devops/"$NF}'` ;do docker pull $i ;done
+
+下载镜像:node-images.txt 并转换
+redis                                                  latest              b6dddb991dfa        3 days ago          107MB
+gcr.io/google_containers/kube-proxy-amd64              v1.7.6              af674cbf7039        10 days ago         115MB
+nginx                                                  latest              da5939581ac8        11 days ago         108MB
+gcr.io/google_containers/heapster-influxdb-amd64       v1.3.3              577260d221db        2 weeks ago         12.5MB
+gcr.io/google_containers/heapster-grafana-amd64        v4.4.3              8cb3de219af7        2 weeks ago         152MB
+gcr.io/google_containers/kubernetes-dashboard-amd64    v1.6.3              691a82db1ecd        8 weeks ago         139MB
+quay.io/coreos/flannel                                 v0.8.0-amd64        9db3bab8c19e        2 months ago        50.7MB
+gcr.io/google_containers/heapster-amd64                v1.4.0              749531a6d2cf        2 months ago        73.4MB
+gcr.io/google_containers/k8s-dns-sidecar-amd64         1.14.4              38bac66034a6        3 months ago        41.8MB
+gcr.io/google_containers/k8s-dns-kube-dns-amd64        1.14.4              a8e00546bcf3        3 months ago        49.4MB
+gcr.io/google_containers/k8s-dns-dnsmasq-nanny-amd64   1.14.4              f7f45b9cb733        3 months ago        41.4MB
+gcr.io/google_containers/pause-amd64                   3.0                 99e59f495ffa        16 months ago       747kB
+nginx                                                  1.7.9               84581e99d807        2 years ago         91.6MB
+
+master----------
+
+ kubeadm init --apiserver-advertise-address 172.22.17.207 --pod-network-cidr 10.244.0.0/16
+
+ mkdir -p $HOME/.kube
+ cp -i /etc/kubernetes/admin.conf $HOME/.kube/config
+ chown $(id -u):$(id -g) $HOME/.kube/config
+ export KUBECONFIG=/etc/kubernetes/kubelet.conf
+
+  kubectl taint nodes --all node-role.kubernetes.io/master
+#部署网络
+  kubectl apply -f https://raw.githubusercontent.com/coreos/flannel/master/Documentation/kube-flannel-rbac.yml
+  kubectl apply -f https://raw.githubusercontent.com/coreos/flannel/master/Documentation/kube-flannel.yml
+
+
+node--------
+   1.yum install -y kubeadm kubelet
+
+   2.修改kubelet配置，启动kubelet(所有节点)
+    vim /etc/systemd/system/kubelet.service.d/10-kubeadm.conf    修改 "cgroup-driver"值 由systemd变为cgroupfs
+
+   3.echo 1 > /proc/sys/net/bridge/bridge-nf-call-iptables
+
+   4.kubeadm join --token c84fe7.1f7bb0ed618db297 120.26.65.228:6443
+
+
+   5.KUBECONFIG=/etc/kubernetes/admin.conf; kubectl apply -f https://raw.githubusercontent.com/cloudnativelabs/kube-router/master/daemonset/kubeadm-kuberouter-all-features.yaml
+
+   6.kubeadm reset:重新获取token
+
+
+
+
+
+
+
+
+
+
+仪表盘：
+vim dashboard.yaml                kubectl apply -f  dashboard.yaml
+
+kind: Service
+apiVersion: v1
+metadata:
+  labels:
+  k8s-app: kubernetes-dashboard
+  name: kubernetes-dashboard
+  namespace: kube-system
+spec:
+type: NodePort
+ports:
+- port: 80
+targetPort: 9090
+nodePort: 31000
+selector:
+  k8s-app: kubernetes-dashboard
+
+下载：
+
+
+    #1. kubectl create -f https://git.io/kube-dashboard
+             #kubectl delete  -f https://git.io/kube-dashboard
+    2. git clone https://github.com/kubernetes/heapster.git && cd heapster/
+
+    3. kubectl create -f dashboard-rbac.yaml
+kind: ClusterRoleBinding
+apiVersion: rbac.authorization.k8s.io/v1beta1
+metadata:
+  name: heapster
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: system:heapster
+subjects:
+- kind: ServiceAccount
+  name: heapster
+  namespace: kube-system
+
+    4. cp deploy/kube-config/rbac/heapster-rbac.yaml deploy/kube-config/influxdb/
+
+    5. kubectl create -f deploy/kube-config/influxdb
+
+
+
+
+
+命令:
+查看所有部署的namespace
+kubectl get deployment --all-namespaces
+
+kubectl describe node
+kubectl get namespaces
+打标签
+kubectl label nodes k8ss1 k8ss2 zone=test
+查看pods labels
+kubectl get pods --show-labels
+更新镜像
+kubectl set image deployment/nginx-deployment nginx=nginx:1.9.1
+编辑kube 文件
+kubectl edit deployment/nginx-deployment
+查看rollout status
+kubectl get rs
+查看详细信息
+kubectl describe deployment
+查看历史更新信息
+kubectl rollout history deployment/nginx-deployment
+查看更详细的信息
+kubectl rollout history deployment/nginx-deployment --revision=2
+更新失败  回滚
+kubectl rollout undo deployment/nginx-deployment
+水平扩展
+kubectl scale deployment nginx-deployment --replicas=10
+动态扩展
+kubectl autoscale deployment nginx-deployment --min=10 --max=15 --cpu-percent=80
+暂停更新
+kubectl rollout pause deployment/nginx-deployment
+更新其他资源
+kubectl set resources deployment nginx-deployment -c=nginx --limits=cpu=200m,memory=512Mi
+一直查看更新状态
+kubectl get rs -w
+
+进入到mc1 的1st容器
+kubectl exec mc1 -c 1st -- /bin/cat /usr/share/nginx/html/index.html
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+[root@k8sm ~]# cat pod.yml
+apiVersion: v1
+kind: Pod
+metadata:
+  name: nginx
+spec:
+  containers:
+  - name: nginx
+    image: nginx
+    ports:
+    - containerPort: 80
+
+
+更详细的输出
+kubectl get pod redis -o yaml
+
+
+[root@k8sm ~]# cat pod.yml
+apiVersion: v1
+kind: Pod
+metadata:
+  name: nginx
+spec:
+  containers:
+  - name: nginx
+    image: nginx
+    ports:
+    - containerPort: 80
+[root@k8sm ~]# cat volumes.yaml
+apiVersion: v1
+kind: Pod
+metadata:
+  name: redis
+spec:
+  containers:
+  - name: redis
+    image: redis
+    volumeMounts:
+    - name: redis-presistent-storage
+      mountPath: /data/redis
+  volumes:
+  - name: redis-presistent-storage
+    emptyDir: {}
+
+kind: ClusterRoleBinding
+apiVersion: rbac.authorization.k8s.io/v1beta1
+metadata:
+  name: heapster
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: system:heapster
+subjects:
+- kind: ServiceAccount
+  name: heapster
+  namespace: kube-system
+kind: Service
+apiVersion: v1
+metadata:
+  labels:
+  k8s-app: kubernetes-dashboard
+  name: kubernetes-dashboard
+  namespace: kube-system
+spec:
+type: NodePort
+ports:
+- port: 80
+targetPort: 9090
+nodePort: 31000
+selector:
+  k8s-app: kubernetes-dashboard
+apiVersion: v1
+kind: ReplicationController
+metadata:
+  name: frontend
+  labels:
+    name: frontend
+spec:
+  replicas: 3
+  selector:
+    name: frontend
+  template:
+    metadata:
+      labels:
+        name: frontend
+    spec:
+      containers:
+      - name: php-redis
+        image: gcr.io/google_containers/example-guestbook-php-redis:v3
+        ports:
+        - containerPort: 80
+apiVersion: v1
+kind: Service
+metadata:
+  name: frontend
+  labels:
+    name: frontend
+spec:
+  type: NodePort
+  ports:
+    - port: 80
+  selector:
+    name: frontend
+# Copyright 2015 Google Inc. All Rights Reserved.
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+# Configuration to deploy release version of the Dashboard UI compatible with
+# Kubernetes 1.6 (RBAC enabled).
+#
+# Example usage: kubectl create -f <this_file>
+
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  labels:
+    k8s-app: kubernetes-dashboard
+  name: kubernetes-dashboard
+  namespace: kube-system
+---
+apiVersion: rbac.authorization.k8s.io/v1beta1
+kind: ClusterRoleBinding
+metadata:
+  name: kubernetes-dashboard
+  labels:
+    k8s-app: kubernetes-dashboard
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: cluster-admin
+subjects:
+- kind: ServiceAccount
+  name: kubernetes-dashboard
+  namespace: kube-system
+---
+kind: Deployment
+apiVersion: extensions/v1beta1
+metadata:
+  labels:
+    k8s-app: kubernetes-dashboard
+  name: kubernetes-dashboard
+  namespace: kube-system
+spec:
+  replicas: 1
+  revisionHistoryLimit: 10
+  selector:
+    matchLabels:
+      k8s-app: kubernetes-dashboard
+  template:
+    metadata:
+      labels:
+        k8s-app: kubernetes-dashboard
+    spec:
+      containers:
+      - name: kubernetes-dashboard
+        image: gcr.io/google_containers/kubernetes-dashboard-amd64:v1.6.3
+        ports:
+        - containerPort: 9090
+          protocol: TCP
+        args:
+          # Uncomment the following line to manually specify Kubernetes API server Host
+          # If not specified, Dashboard will attempt to auto discover the API server and connect
+          # to it. Uncomment only if the default does not work.
+           - --apiserver-host=http://172.22.17.207:6443
+        livenessProbe:
+          httpGet:
+            path: /
+            port: 9090
+          initialDelaySeconds: 30
+          timeoutSeconds: 30
+      serviceAccountName: kubernetes-dashboard
+      # Comment the following tolerations if Dashboard must not be deployed on master
+      tolerations:
+      - key: node-role.kubernetes.io/master
+        effect: NoSchedule
+---
+kind: Service
+apiVersion: v1
+metadata:
+  labels:
+    k8s-app: kubernetes-dashboard
+  name: kubernetes-dashboard
+  namespace: kube-system
+spec:
+  ports:
+  - port: 80
+    targetPort: 9090
+  selector:
+    k8s-app: kubernetes-dashboard
+apiVersion: v1
+kind: Pod
+metadata:
+  name: nginx
+  labels:
+    app: nginx
+spec:
+  containers:
+  - name: nginx
+    image: nginx
+    ports:
+    - containerPort: 80
+apiVersion: apps/v1beta1 # for versions before 1.6.0 use extensions/v1beta1
+kind: Deployment
+metadata:
+  name: nginx-deployment
+spec:
+  replicas: 3
+  template:
+    metadata:
+      labels:
+        app: nginx
+    spec:
+      containers:
+      - name: nginx
+        image: nginx:1.7.9
+        ports:
+        - containerPort: 80
+apiVersion: v1
+kind: ReplicationController
+metadata:
+  name: nginx-controller
+spec:
+  replicas: 2
+  selector:
+    app: nginx
+  template:
+    metadata:
+      labels:
+        app: nginx
+    spec:
+      containers:
+      - name: nginx
+        image: nginx
+        ports:
+        - containerPort: 80
+apiVersion: v1
+kind: ReplicationController
+metadata:
+  name: redis-master
+  labels:
+    name: reddis-master
+spec:
+  replicas: 1
+  selector:
+    name: redis-master
+  template:
+    metadata:
+      labels:
+        name: redis-master
+    spec:
+      containers:
+      - name: master
+        image: redis
+        ports:
+        - containerPort: 6379
+apiVersion: v1
+kind: Service
+metadata:
+  name: redis-master
+  labels:
+    name: redis-master
+spec:
+  ports:
+  - port: 6379
+    targetPort: 6379
+  selector:
+    name: redis-master
+apiVersion: v1
+kind: ReplicationController
+metadata:
+  name: redis-slave
+  labels:
+    name: redis-slave
+spec:
+  replicas: 2
+  selector:
+    name: redis-slave
+  template:
+    metadata:
+      labels:
+        name: redis-slave
+    spec:
+      containers:
+      - name: worker
+        image: kubernetes/redis-slave:v2
+        ports:
+        - containerPort: 6379
+apiVersion: v1
+kind: Service
+metadata:
+  name: redis-slave
+  labels:
+    name: redis-slave
+spec:
+  ports:
+  - port: 6379
+  selector:
+    name: redis-slave
+apiVersion: v1
+kind: ReplicationController
+metadata:
+  name: my-nginx
+spec:
+  replicas: 2
+  template:
+    metadata:
+      labels:
+        app: nginx
+    spec:
+      containers:
+      - name: nginx
+        image: nginx
+        ports:
+        - containerPort: 80
+        resources:
+          limits:
+            cpu: 500m
+            memory: 64Mi
+apiVersion: v1
+kind: Secret
+metadata:
+  name: mysecret
+type: Opaque
+data:
+  password: dmFsdWUtMg0K
+  username: dmFsdWUtMg0K
+apiVersion: v1
+kind: Service
+metadata:
+  name: nginx-service
+spec:
+  ports:
+  - port: 8000
+    targetPort: 80
+
+  selector:
+    app: nginx
+apiVersion: v1
+kind: Pod
+metadata:
+  name: redis
+spec:
+  containers:
+  - name: redis
+    image: redis
+    volumeMounts:
+    - name: redis-presistent-storage
+      mountPath: /data/redis
+  volumes:
+  - name: redis-presistent-storage
+    emptyDir: {}
+
+
+
+
+
+
+
+
+
+
