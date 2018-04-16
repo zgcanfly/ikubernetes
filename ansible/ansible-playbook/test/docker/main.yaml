@@ -10,6 +10,7 @@
     yum: state=absent name={{ item }}
     with_items:
     - docker
+    - docker-ce
     - docker-common
     - docker-selinux
     - docker-engine
