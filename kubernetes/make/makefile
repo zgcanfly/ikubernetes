@@ -46,6 +46,11 @@ node:
 	make init
 	make k8ssdeploy
 
+clean:
+	kubeadm reset
+	yum -y remove kubeadm kubectl kubelet
+
+
 help:
 	echo "Use age：make master or make node"
 
