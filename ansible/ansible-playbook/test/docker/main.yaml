@@ -32,6 +32,7 @@
     shell: pip install docker-compose
   - name: copy config for docker
     copy: src={{ item.src }} dest={{item.dest}}
+    with_items:
     - { src: '/opt/ikubernetes/ansible/files/docker/docker.service', dest: '/etc/systemd/system/docker.service' }
     - { src: '/opt/ikubernetes/ansible/files/yum.conf', dest: '/etc/yum.conf' }
   - name: ensure docker serivce enable
