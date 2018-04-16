@@ -3,26 +3,20 @@
 #date:2017_09_26
 #init centos7
 
-export MKROOT = /opt/sg_deploy
-export K8SROOT = /opt/sg_deploy/kubernetes
+export MKROOT = /opt/ikubernetes
+export K8SROOT = /opt/ikubernetes/kubernetes
 export local_ip = ${ip a|egrep "eth1|ens"|grep inet|awk '{print $2}'|awk -F "/" '{print $1}'}
 
 
 .PHONY: master node
 
 init:
-	$(MKROOT)/deployer/tools/init7.sh
 	cp $(K8SROOT)/repo/kubernetes.repo /etc/yum.repos.d/
 	yum install -y kubeadm kubelet
 	sed -i "s/systemd/cgroupfs/g" /etc/systemd/system/kubelet.service.d/10-kubeadm.conf
 
 
 
-downnode:
-	$(MKROOT)/docker/turnimg.sh $(K8SROOT)/files/node.txt
-
-downmaster:
-	$(MKROOT)/docker/turnimg.sh $(K8SROOT)/files/master.txt
 
 k8smdeploy:
 	kubeadm init --apiserver-advertise-address ${local_ip} --pod-network-cidr 10.244.0.0/16
@@ -42,7 +36,6 @@ k8ssdeploy:
 
 master:
 	make init
-	make downmaster
 	make k8smdeploy
 
 
@@ -50,7 +43,6 @@ master:
 
 node:
 	make init
-	make downnode
 	make k8ssdeploy
 
 help:
