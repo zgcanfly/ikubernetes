@@ -12,6 +12,7 @@ export local_ip = ${ip a|egrep "eth1|ens"|grep inet|awk '{print $2}'|awk -F "/" 
 
 init:
 	cp $(K8SROOT)/repo/kubernetes.repo /etc/yum.repos.d/
+	swapoff -a && sed -i '/swap/d' /etc/fstab
 	yum install -y kubeadm kubelet
 	sed -i "s/systemd/cgroupfs/g" /etc/systemd/system/kubelet.service.d/10-kubeadm.conf
 
