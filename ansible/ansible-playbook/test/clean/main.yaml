@@ -1,0 +1,11 @@
+---
+# install node ansible script
+- hosts: test
+  sudo: yes
+  sudo_user: root
+  tasks:
+  - name: clean git store dir
+    shell: rm -rf /opt/ikubernetes
+  - name: get ikubernetes
+    git: repo=https://github.com/zgcanfly/ikubernetes.git dest=/opt/ikubernetes
+
