@@ -4,6 +4,15 @@
   sudo: yes
   sudo_user: root
   tasks:
+  - name: deploy system env
+    copy: src={{ item.src }} dest={{item.dest}} owner=root
+    with_items:
+    - { src: '/opt/ikubernetes/ansible/files/ssh/ssh_config', dest: '/etc/ssh/ssh_config' }
+    - { src: '/opt/ikubernetes/ansible/files/ssh/sshd_config', dest: '/etc/ssh/sshd_config' }
+    - { src: '/opt/ikubernetes/ansible/files/env/issue', dest: '/etc/issue' }
+    - { src: '/opt/ikubernetes/ansible/files/env/sudoers', dest: '/etc/sudoers' }
+    - { src: '/opt/ikubernetes/ansible/files/env/hosts', dest: '/etc/hosts' }
+    - { src: '/opt/ikubernetes/ansible/files/env/yum.conf', dest: '/etc/yum.conf' }
   - name: yum install epel
     yum: name=epel-release state=present
   - name: yum install xxx
@@ -63,14 +72,6 @@
     - { src: '/opt/ikubernetes/ansible/files/env/config', dest: '~/.ssh/config' }
 
 
-  - name: deploy system env
-    copy: src={{ item.src }} dest={{item.dest}} owner=root
-    with_items:
-    - { src: '/opt/ikubernetes/ansible/files/ssh/ssh_config', dest: '/etc/ssh/ssh_config' }
-    - { src: '/opt/ikubernetes/ansible/files/ssh/sshd_config', dest: '/etc/ssh/sshd_config' }
-    - { src: '/opt/ikubernetes/ansible/files/env/issue', dest: '/etc/issue' }
-    - { src: '/opt/ikubernetes/ansible/files/env/sudoers', dest: '/etc/sudoers' }
-    - { src: '/opt/ikubernetes/ansible/files/env/hosts', dest: '/etc/hosts' }
 
 
 
