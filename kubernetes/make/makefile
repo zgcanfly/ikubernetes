@@ -15,6 +15,7 @@ init:
 	swapoff -a && sed -i '/swap/d' /etc/fstab
 	/usr/local/bin/proxychains4 yum install -y kubeadm kubelet
 	sed -i "s/systemd/cgroupfs/g" /etc/systemd/system/kubelet.service.d/10-kubeadm.conf
+	echo 1 > /proc/sys/net/bridge/bridge-nf-call-iptables
 
 
 
@@ -29,7 +30,6 @@ k8smdeploy:
 	iptables -P FORWARD ACCEPT
 
 k8ssdeploy:
-	echo 1 > /proc/sys/net/bridge/bridge-nf-call-iptables
 	iptables -P FORWARD ACCEPT
 	echo " Use：  kubeadm join --token  "
 
