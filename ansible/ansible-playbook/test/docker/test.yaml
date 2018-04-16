@@ -14,18 +14,19 @@
     - docker-common
     - docker-selinux
     - docker-engine
-  - name: yum install yum-tools
-    yum: state=present name={{ item }}
-    with_items:
-    - yum-utils
-    - device-mapper-persistent-data
-    - lvm2
+
   - name: get docker-ce repo.file
     get_url: url=https://download.docker.com/linux/centos/docker-ce.repo dest=/etc/yum.repos.d/docker-ce.repo
   - name: yum install  python-pip
     yum: state=present name={{ item }}
     with_items:
     - python-pip
+  - name: yum install yum-tools
+    yum: state=present name={{ item }}
+    with_items:
+    - yum-utils
+    - device-mapper-persistent-data
+    - lvm2
   - name: yum install docker-ce
     shell:  source ~/.bash_profile && proxychains4 yum install docker-ce
   - name: install docker-compose
