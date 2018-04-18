@@ -8,7 +8,7 @@ Wants=network-online.target
 Type=notify
 MountFlags=slave
 
-ExecStart=/usr/bin/dockerd 
+ExecStart=/usr/bin/dockerd
 #ExecStart=/usr/bin/dockerd --registry-mirror=https://49ja5wne.mirror.aliyuncs.com
 ExecReload=/bin/kill -s HUP $MAINPID
 

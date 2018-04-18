@@ -32,10 +32,10 @@
 #    shell: /usr/local/bin/proxychains4 yum install -y docker-ce
   - name: install docker-compose
     shell: pip install docker-compose
-  - name: copy config for docker
-    copy: src={{ item.src }} dest={{item.dest}}
-    with_items:
-    - { src: '/opt/ikubernetes/ansible/files/docker/docker.service', dest: '/etc/systemd/system/docker.service' }
+#  - name: copy config for docker
+#    copy: src={{ item.src }} dest={{item.dest}}
+#    with_items:
+#    - { src: '/opt/ikubernetes/ansible/files/docker/docker.service', dest: '/etc/systemd/system/docker.service' }
   - name: ensure docker serivce enable
     service: name=docker state=started enabled=True
     handlers:
