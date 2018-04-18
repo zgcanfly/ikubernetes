@@ -21,7 +21,7 @@
     yum: state=present name={{ item }}
     with_items:
     - python-pip
-  - name: yum install yum-tools
+  - name: yum install yum-tools docker
     yum: state=present name={{ item }}
     with_items:
     - yum-utils
