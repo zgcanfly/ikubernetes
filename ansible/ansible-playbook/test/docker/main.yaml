@@ -27,7 +27,14 @@
     - yum-utils
     - device-mapper-persistent-data
     - lvm2
-#  - name: yum install docker-ce
+  - name: yum install docker-ce
+    yum: state=present name={{ item }}
+    with_items:
+    - docker
+#    - docker-ce
+    - docker-common
+    - docker-selinux
+    - docker-engine
 #    shell: /usr/local/bin/proxychains4 yum install -y docker-ce
   - name: install docker-compose
     shell: pip install docker-compose
