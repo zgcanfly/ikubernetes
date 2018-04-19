@@ -5,7 +5,7 @@
   sudo_user: root
   tasks:
   - name: clean cache of yum
-    shell: yum clean all
+    shell: yum clean all && yum install -y yum-utils  && yum-complete-transaction --cleanup-only
   - name: ensure install git
     yum: name=git state=present
   - name: clean git store dir
