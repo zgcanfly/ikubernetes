@@ -69,6 +69,8 @@
     - openssl-devel
     - nfs-utils
     - psmisc
+  - name: yum udpate
+    shell: yum update -y
 
 
 
