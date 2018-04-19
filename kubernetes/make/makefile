@@ -20,7 +20,7 @@ init:
 	echo 1 > /proc/sys/net/bridge/bridge-nf-call-iptables
 
 getimages:
-	for imageName in ${images[@]} ; do ;docker pull champly/${imageName} ;docker tag champly/${imageName} gcr.io/google_containers/${imageName} ;docker rmi champly/${imageName} ;done
+	for imageName in ${images[@]} ; do  docker pull champly/${imageName} && docker tag champly/${imageName} gcr.io/google_containers/${imageName} && docker rmi champly/${imageName} ;done
 
 
 k8smdeploy:
