@@ -6,7 +6,6 @@
 export MKROOT = /opt/ikubernetes
 export K8SROOT = /opt/ikubernetes/kubernetes
 export local_ip = ${ip a|egrep "eth1|ens"|grep inet|awk '{print $2}'|awk -F "/" '{print $1}'}
-export images=(kube-controller-manager-amd64 etcd-amd64 k8s-dns-sidecar-amd64 kube-proxy-amd64 kube-apiserver-amd64 kube-scheduler-amd64 pause-amd64 k8s-dns-dnsmasq-nanny-amd64 k8s-dns-kube-dns-amd64)
 
 
 .PHONY: master node
@@ -14,13 +13,11 @@ export images=(kube-controller-manager-amd64 etcd-amd64 k8s-dns-sidecar-amd64 ku
 init:
 	cp $(K8SROOT)/repo/kubernetes.repo /etc/yum.repos.d/
 	swapoff -a && sed -i '/swap/d' /etc/fstab
-	/usr/local/bin/proxychains4 yum install -y kubelet-1.8.4-0 kubeadm-1.8.4-0 kubectl-1.8.4-0
+	yum install -y kubelet-1.8.4-0 kubeadm-1.8.4-0 kubectl-1.8.4-0
 	sed -i "s/systemd/cgroupfs/g" /etc/systemd/system/kubelet.service.d/10-kubeadm.conf
 	systemctl daemon-reload && systemctl restart kubelet && systemctl enable kubelet.service
 	echo 1 > /proc/sys/net/bridge/bridge-nf-call-iptables
 
-getimages:
-	for imageName in ${images[@]} ; do  docker pull repo.yuangg.com/devops/${imageName} && docker tag repo.yuangg.com/devops/${imageName} gcr.io/google_containers/${imageName} && docker rmi repo.yuangg.com/devops/${imageName} ;done
 
 
 k8smdeploy:
