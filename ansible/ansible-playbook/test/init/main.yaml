@@ -16,6 +16,7 @@
     - { src: '/opt/ikubernetes/ansible/files/env/hosts', dest: '/etc/hosts' }
     - { src: '/opt/ikubernetes/ansible/files/env/yum.conf', dest: '/etc/yum.conf' }
     - { src: '/opt/ikubernetes/ansible/files/env/CentOS7-Base-163.repo', dest: '/etc/yum.repos.d/CentOS7-Base-163.repo' }
+    - { src: '/opt/ikubernetes/ansible/files/env/epel.repo', dest: '/etc/yum.repos.d/epel.repo' }
   - name: yum udpate
     shell: yum update -y
   - name: yum install epel
