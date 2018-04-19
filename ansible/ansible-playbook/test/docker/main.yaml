@@ -14,6 +14,10 @@
     - docker-common
     - docker-selinux
     - docker-engine
+  - name: copy repo file for docker
+    copy: src={{ item.src }} dest={{item.dest}}
+    with_items:
+    - { src: '/opt/ikubernetes/ansible/files/docker/docker-ce.repo', dest: '/etc/yum.repos.d/docker-ce.repo' }
 
 #  - name: get docker-ce repo.file
 #    get_url: url=https://download.docker.com/linux/centos/docker-ce.repo dest=/etc/yum.repos.d/docker-ce.repo
