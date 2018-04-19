@@ -15,8 +15,8 @@
     - docker-selinux
     - docker-engine
 
-  - name: get docker-ce repo.file
-    get_url: url=https://download.docker.com/linux/centos/docker-ce.repo dest=/etc/yum.repos.d/docker-ce.repo
+#  - name: get docker-ce repo.file
+#    get_url: url=https://download.docker.com/linux/centos/docker-ce.repo dest=/etc/yum.repos.d/docker-ce.repo
   - name: yum install  python-pip
     yum: state=present name={{ item }}
     with_items:
