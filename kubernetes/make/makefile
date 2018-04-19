@@ -38,7 +38,6 @@ k8ssdeploy:
 
 master:
 	make init
-	make getimages
 	make k8smdeploy
 
 
