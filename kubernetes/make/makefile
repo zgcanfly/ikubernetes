@@ -5,7 +5,7 @@
 
 export MKROOT = /opt/ikubernetes
 export K8SROOT = /opt/ikubernetes/kubernetes
-export local_ip = ${ip a|egrep "eth1|ens"|grep inet|awk '{print $2}'|awk -F "/" '{print $1}'}
+export local_ip = ${ip a|egrep "eth1|ens|eno16777736"|grep inet|awk '{print $2}'|awk -F "/" '{print $1}'}
 
 
 .PHONY: master node
