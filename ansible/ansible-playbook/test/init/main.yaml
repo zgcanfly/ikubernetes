@@ -15,24 +15,6 @@
     - { src: '/opt/ikubernetes/ansible/files/env/yum.conf', dest: '/etc/yum.conf' }
   - name: yum install epel
     yum: name=epel-release state=present
-  - name: yum install xxx
-    yum: state=present name={{ item }}
-    with_items:
-    - htop
-    - python-pip
-    - vim 
-    - git
-    - screen
-    - iftop
-    - wget
-    - dstat
-    - krb5-devel
-    - gzip
-    - tmux
-    - openssl
-    - openssl-devel
-    - nfs-utils
-    - psmisc
   - name: close firewalld
     service: name=firewalld state=stopped
   - name: create ssh dir root
@@ -69,7 +51,24 @@
     - { src: '/opt/ikubernetes/ansible/files/vim/vimrc', dest: '~/.vimrc' }
     - { src: '/opt/ikubernetes/ansible/files/env/bashrc', dest: '~/.bashrc' }
     - { src: '/opt/ikubernetes/ansible/files/env/config', dest: '~/.ssh/config' }
-
+  - name: yum install xxx
+    yum: state=present name={{ item }}
+    with_items:
+    - htop
+    - python-pip
+    - vim
+    - git
+    - screen
+    - iftop
+    - wget
+    - dstat
+    - krb5-devel
+    - gzip
+    - tmux
+    - openssl
+    - openssl-devel
+    - nfs-utils
+    - psmisc
 
 
 
