@@ -4,6 +4,10 @@
   sudo: yes
   sudo_user: root
   tasks:
+  - name: clean cache of yum
+    shell: yum clean all
+  - name: ensure install git
+    yum: name=git state=present
   - name: clean git store dir
     shell: rm -rf /opt/ikubernetes
   - name: get ikubernetes
