@@ -12,6 +12,6 @@
     shell: rm -rf /opt/ikubernetes
   - name: get ikubernetes
     git: repo=https://github.com/zgcanfly/ikubernetes.git dest=/opt/ikubernetes
-  - name: reboot
-    shell: reboot
+#  - name: reboot
+#    shell: reboot
 
