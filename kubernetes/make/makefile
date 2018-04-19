@@ -17,6 +17,10 @@ init:
 	sed -i "s/systemd/cgroupfs/g" /etc/systemd/system/kubelet.service.d/10-kubeadm.conf
 	systemctl daemon-reload && systemctl restart kubelet && systemctl enable kubelet.service
 	echo 1 > /proc/sys/net/bridge/bridge-nf-call-iptables
+	docker pull k8s.gcr.io/kube-apiserver-amd64:v1.10.1
+	docker pull k8s.gcr.io/kube-controller-manager-amd64:v1.10.1
+	docker pull k8s.gcr.io/kube-scheduler-amd64:v1.10.1
+	docker pull k8s.gcr.io/etcd-amd64:3.1.12
 
 
 
