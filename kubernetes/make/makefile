@@ -46,7 +46,6 @@ master:
 
 node:
 	make init
-	make getimages
 	make k8ssdeploy
 
 clean:
