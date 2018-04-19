@@ -13,7 +13,7 @@ export local_ip = ${ip a|egrep "eth1|ens"|grep inet|awk '{print $2}'|awk -F "/" 
 init:
 	cp $(K8SROOT)/repo/kubernetes.repo /etc/yum.repos.d/
 	swapoff -a && sed -i '/swap/d' /etc/fstab
-	yum install -y kubelet-1.8.4-0 kubeadm-1.8.4-0 kubectl-1.8.4-0
+	yum install -y kubelet kubeadm kubectl
 	sed -i "s/systemd/cgroupfs/g" /etc/systemd/system/kubelet.service.d/10-kubeadm.conf
 	systemctl daemon-reload && systemctl restart kubelet && systemctl enable kubelet.service
 	echo 1 > /proc/sys/net/bridge/bridge-nf-call-iptables
@@ -21,7 +21,7 @@ init:
 
 
 k8smdeploy:
-	kubeadm reset && kubeadm init --kubernetes-version=v1.8.11 --token-ttl 0 --apiserver-advertise-address ${local_ip}  --pod-network-cidr=10.244.0.0/16
+	kubeadm reset && kubeadm init  --token-ttl 0 --apiserver-advertise-address ${local_ip}  --pod-network-cidr=10.244.0.0/16
 	mkdir -p ${HOME}/.kube
 	cp -i /etc/kubernetes/admin.conf $HOME/.kube/config
 	chown $(id -u):$(id -g) $HOME/.kube/config
