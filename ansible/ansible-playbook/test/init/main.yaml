@@ -4,8 +4,7 @@
   sudo: yes
   sudo_user: root
   tasks:
-  - name: yum udpate
-    shell: yum update -y
+
   - name: deploy system env
     copy: src={{ item.src }} dest={{item.dest}} owner=root
     with_items:
@@ -15,6 +14,9 @@
     - { src: '/opt/ikubernetes/ansible/files/env/sudoers', dest: '/etc/sudoers' }
     - { src: '/opt/ikubernetes/ansible/files/env/hosts', dest: '/etc/hosts' }
     - { src: '/opt/ikubernetes/ansible/files/env/yum.conf', dest: '/etc/yum.conf' }
+    - { src: '/opt/ikubernetes/ansible/files/env/CentOS7-Base-163.repo', dest: '/etc/yum.repo.d/CentOS7-Base-163.repo' }
+  - name: yum udpate
+    shell: yum update -y
   - name: yum install epel
     yum: name=epel-release state=present
   - name: close firewalld
