@@ -1,7 +1,7 @@
 #!/bin/bash
 #author zgyang
 #date:2017_09_26
-#init centos7
+#Deploy kubernetes on centos7.
 
 export MKROOT = /opt/ikubernetes
 export K8SROOT = /opt/ikubernetes/kubernetes
@@ -24,7 +24,7 @@ init:
 
 
 
-k8smdeploy:
+deploymaster:
 	kubeadm reset && kubeadm init  --token-ttl 0 --apiserver-advertise-address=${local_ip}  --pod-network-cidr=10.244.0.0/16
 	mkdir -p ${HOME}/.kube
 	cp -i /etc/kubernetes/admin.conf $HOME/.kube/config
@@ -33,7 +33,12 @@ k8smdeploy:
 	kubectl apply -f  $(K8SROOT)/files/kube-flannel.yml
 	iptables -P FORWARD ACCEPT
 
-k8ssdeploy:
+deployUI:
+	kubectl create -f https://raw.githubusercontent.com/kubernetes/dashboard/master/src/deploy/recommended/kubernetes-dashboard.yaml
+    kubectl proxy --address=${local_ip} --accept-hosts='^*$'
+    kubectl apply -f  $(K8SROOT)/files/kube-dashboard-access.yaml
+
+deploynode:
 
 	iptables -P FORWARD ACCEPT
 	echo " Use：  kubeadm join --token  "
@@ -42,14 +47,15 @@ k8ssdeploy:
 
 master:
 	make init
-	make k8smdeploy
+	make deploymaster
+	make deployUI
 
 
 
 
 node:
 	make init
-	make k8ssdeploy
+	make deploynode
 
 clean:
 	kubeadm reset

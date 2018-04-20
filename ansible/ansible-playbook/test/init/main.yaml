@@ -1,12 +1,12 @@
 ---
 # init centos7 ansible script
-- hosts: test
+- hosts: all_hosts
   sudo: yes
   sudo_user: root
   tasks:
-  - name: clean yum.repo files
+  - name: Clean yum.repo files
     shell: rm -rf /etc/yum.repos.d/*
-  - name: deploy system env
+  - name: Build system environment
     copy: src={{ item.src }} dest={{item.dest}} owner=root
     with_items:
     - { src: '/opt/ikubernetes/ansible/files/ssh/ssh_config', dest: '/etc/ssh/ssh_config' }
@@ -42,7 +42,7 @@
     - /data/www
     - /data/db
     - /data/db/mongo
-  - name: copy files for centos
+  - name: Copy the file to centos user.
     copy: src={{ item.src }} dest={{item.dest}} owner=centos
     with_items:
     - { src: '/opt/ikubernetes/ansible/files/env/authorized_keys', dest: '~centos/.ssh/authorized_keys' }
@@ -50,14 +50,14 @@
     - { src: '/opt/ikubernetes/ansible/files/env/bashrc', dest: '~centos/.bashrc' }
     - { src: '/opt/ikubernetes/ansible/files/env/config', dest: '~centos/.ssh/config' }
 
-  - name: copy files for root
+  - name: Copy the file to root user.
     copy: src={{ item.src }} dest={{item.dest}} owner=root
     with_items:
     - { src: '/opt/ikubernetes/ansible/files/env/authorized_keys', dest: '~/.ssh/authorized_keys' }
     - { src: '/opt/ikubernetes/ansible/files/vim/vimrc', dest: '~/.vimrc' }
     - { src: '/opt/ikubernetes/ansible/files/env/bashrc', dest: '~/.bashrc' }
     - { src: '/opt/ikubernetes/ansible/files/env/config', dest: '~/.ssh/config' }
-  - name: yum install xxx
+  - name: Install other software
     yum: state=present name={{ item }}
     with_items:
     - htop
@@ -75,10 +75,3 @@
     - openssl-devel
     - nfs-utils
     - psmisc
-
-
-
-
-
-
-

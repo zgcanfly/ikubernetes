@@ -1,6 +1,6 @@
 ---
 # install node ansible script
-- hosts: test
+- hosts: all_hosts
   sudo: yes
   sudo_user: root
   tasks:
