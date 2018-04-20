@@ -1,7 +1,7 @@
 #!/bin/bash
 #author zgyang
 #date:2017_09_26
-#init centos7
+#Deploy kubernetes on centos7.
 
 export MKROOT = /opt/ikubernetes
 export K8SROOT = /opt/ikubernetes/kubernetes

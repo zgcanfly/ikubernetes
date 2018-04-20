@@ -1,1 +1,13 @@
-kub kub1 kub2
+[all_hosts]
+kub
+kub1
+kub2
+kub3
+kub4
+[k8s-node]
+kub1
+kub2
+kub3
+kub4
+[k8s-master]
+kub
