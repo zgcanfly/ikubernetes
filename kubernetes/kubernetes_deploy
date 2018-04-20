@@ -111,9 +111,7 @@ node--------
    6.kubeadm reset:重新获取token
 
 
-
-
-
+echo "export KUBECONFIG=/etc/kubernetes/admin.conf" >>~/.bash_profile && source ~/.bash_profile
 
 
 
@@ -589,4 +587,4 @@ spec:
 
 
 
-
+kubeadm join 192.168.24.130:6443 --token 268u3l.bsoe58m3ukrs5qx9 --discovery-token-ca-cert-hash sha256:68503715181150cc267aa0f4138955a653e18725f93cbb5af40fa431dfd9d93e
