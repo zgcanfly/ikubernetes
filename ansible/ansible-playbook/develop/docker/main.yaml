@@ -4,9 +4,7 @@
   sudo: yes
   sudo_user: root
   tasks:
-#  - name: yum install epel
-#    yum: name=epel-release state=present
-  - name: yum remove old docker
+  - name: yum erase old docker
     yum: state=absent name={{ item }}
     with_items:
     - docker
@@ -14,28 +12,25 @@
     - docker-common
     - docker-selinux
     - docker-engine
-  - name: copy repo file for docker
-    copy: src={{ item.src }} dest={{item.dest}}
-    with_items:
-    - { src: '/opt/ikubernetes/ansible/files/docker/docker-ce.repo', dest: '/etc/yum.repos.d/docker-ce.repo' }
-
-#  - name: get docker-ce repo.file
-#    get_url: url=https://download.docker.com/linux/centos/docker-ce.repo dest=/etc/yum.repos.d/docker-ce.repo
-  - name: yum install  python-pip
+#  - name: copy repo file for docker
+#    copy: src={{ item.src }} dest={{item.dest}}
+#    with_items:
+#    - { src: '/opt/ikubernetes/ansible/files/docker/docker-ce.repo', dest: '/etc/yum.repos.d/docker-ce.repo' }
+  - name: get docker-ce repo.file
+    get_url: url=https://download.docker.com/linux/centos/docker-ce.repo dest=/etc/yum.repos.d/docker-ce.repo
+  - name: yum install python-pip yum-tools device-mapper lvm2
     yum: state=present name={{ item }}
     with_items:
     - python-pip
-  - name: yum install yum-tools docker
-    yum: state=present name={{ item }}
-    with_items:
     - yum-utils
     - device-mapper-persistent-data
     - lvm2
   - name: install docker-ce
     yum: name=docker-ce state=present
-  - name: install docker-compose
-    shell: pip install docker-compose
-  - name: copy config for docker
+#
+#  - name: install docker-compose
+#    shell: pip install docker-compose
+  - name: copy the config to docker
     copy: src={{ item.src }} dest={{item.dest}}
     with_items:
     - { src: '/opt/ikubernetes/ansible/files/docker/docker.service', dest: '/etc/systemd/system/docker.service' }
