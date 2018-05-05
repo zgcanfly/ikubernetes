@@ -1,0 +1,7 @@
+[ceph-noarch]
+name=Ceph noarch packages
+baseurl=https://download.ceph.com/rpm-jewel/el7/noarch
+enabled=1
+gpgcheck=1
+type=rpm-md
+gpgkey=https://download.ceph.com/keys/release.asc
