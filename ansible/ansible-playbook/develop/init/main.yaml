@@ -55,6 +55,7 @@
   - name: Install other software
     yum: state=present name={{ item }}
     with_items:
+    - tree
     - htop
     - python-pip
     - vim
