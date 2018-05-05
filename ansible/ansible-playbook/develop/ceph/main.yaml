@@ -1,0 +1,29 @@
+---
+#install ceph on centos7
+
+- hosts: kub
+  sudo: yes
+  sudo_user: root
+  tasks:
+  - name: copy ceph repo file
+    copy: src={{ item.src }} dest={{item.dest}} owner=root
+    with_items:
+    - { src: '/opt/ikubernetes/ansible/files/ceph/ceph.repo', dest: '/etc/yum.repos.d/ceph.repo' }
+  - name: Install ceph-deploy
+    yum: state=present name={{ item }}
+    with_items:
+    - ceph-deploy
+    - ntp
+    - ntpdate
+    - ntp-doc
+  - name: calibration time
+    shell: ntpdate 0.cn.pool.ntp.org
+  - name:  mkdir ceph dir
+    file: path={{ item }}  owner=root group=root state=directory
+    with_items:
+    - /etc/ceph
+    - /etc/ceph/ceph-cluster
+  - name: Copy the file to ceph
+    copy: src={{ item.src }} dest={{item.dest}} owner=root
+    with_items:
+    - { src: '/opt/ikubernetes/ansible/files/ceph/ceph.conf', dest: '/etc/ceph/ceph.conf' }
