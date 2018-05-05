@@ -1,7 +1,7 @@
 ---
 #install ceph on centos7
 
-- hosts: kub
+- hosts: all_hosts
   sudo: yes
   sudo_user: root
   tasks:
