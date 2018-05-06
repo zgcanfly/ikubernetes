@@ -5,8 +5,8 @@
 export MKROOT = /opt/ikubernetes
 export local_ip = ${ip a|egrep "eth1|ens|eno16777736"|grep inet|awk '{print $2}'|awk -F "/" '{print $1}'}
 
-centos = ${cat /etc/os-release|grep -i 'centos'}
-ubuntu = ${cat /etc/os-release|grep -i 'ubuntu'}
+export centos = ${cat /etc/os-release|grep -i 'centos'}
+export ubuntu = ${cat /etc/os-release|grep -i 'ubuntu'}
 
 
 .PHONY: master node
