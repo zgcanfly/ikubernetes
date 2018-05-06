@@ -13,3 +13,8 @@ kub4
 kub
 [ceph-monitor]
 kub
+[ceph-node]
+kub1
+kub2
+kub3
+kub4
