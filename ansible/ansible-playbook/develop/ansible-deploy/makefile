@@ -7,10 +7,8 @@ export centos = ${cat /etc/os-release|grep -i 'centos'}
 export ubuntu = ${cat /etc/os-release|grep -i 'ubuntu'}
 
 
-.PHONY: master node
-
 install_ansible:
-	@if  ${centos}=="CentOS"  ;then  yum install -y ansible ;else apt install -y ansible ;fi
+	if  ${centos} == "CentOS"  ;then  yum install -y ansible ;else apt install -y ansible ;fi
 
 
 
