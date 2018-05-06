@@ -8,7 +8,7 @@ export ubuntu = ${cat /etc/os-release|grep -i 'ubuntu'}
 
 
 install_ansible:
-	if  [ ${centos} = "CentOS" ] ;then  yum install -y ansible ;else apt install -y ansible ;fi
+	if  [ ${centos} == "CentOS" ] ;then  yum install -y ansible ;else apt install -y ansible ;fi
 
 
 
