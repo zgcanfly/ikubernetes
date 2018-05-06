@@ -1,4 +1,4 @@
-#!/bin/bash
+---
 #author zgyang
 #date:2017_09_26
 #Deploy ansible on centos7.
