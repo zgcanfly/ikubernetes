@@ -12,7 +12,7 @@ ubuntu = `cat /etc/os-release|grep -i ubuntu`
 .PHONY: master node
 
 install_ansible:
-	@if ${centos} ;then  yum install -y ansible;else apt install -y ansible;fi
+	@if ${centos}=='centos'  ;then  yum install -y ansible;else apt install -y ansible;fi
 
 
 
