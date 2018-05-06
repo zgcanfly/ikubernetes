@@ -22,7 +22,7 @@
     file: path={{ item }}  owner=root group=root state=directory
     with_items:
     - /etc/ceph
-    - /etc/ceph/ceph-cluster
+    - /centos/ceph-cluster
   - name: Copy the file to ceph
     copy: src={{ item.src }} dest={{item.dest}} owner=root
     with_items:
