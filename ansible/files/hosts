@@ -11,3 +11,5 @@ kub3
 kub4
 [k8s-master]
 kub
+[ceph-monitor]
+kub
