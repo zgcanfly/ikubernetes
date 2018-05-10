@@ -8,8 +8,8 @@
 #    shell: yum clean all && yum install -y yum-utils  && yum-complete-transaction --cleanup-only
   - name: ensure install git
     yum: name=git state=present
-#  - name: clean git store dir
-#    shell: rm -rf /opt/ikubernetes
+  - name: clean git store dir
+    shell: rm -rf /opt/ikubernetes
   - name: get ikubernetes
     git: repo=https://github.com/zgcanfly/ikubernetes.git dest=/opt/ikubernetes
 #  - name: reboot
