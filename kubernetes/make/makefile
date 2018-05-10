@@ -35,8 +35,8 @@ deploymaster:
 
 deployUI:
 	kubectl create -f https://raw.githubusercontent.com/kubernetes/dashboard/master/src/deploy/recommended/kubernetes-dashboard.yaml
-    kubectl proxy --address=${local_ip} --accept-hosts='^*$'
-    kubectl apply -f  $(K8SROOT)/files/kube-dashboard-access.yaml
+	kubectl proxy --address=${local_ip} --accept-hosts='^*$'
+    	kubectl apply -f  $(K8SROOT)/files/kube-dashboard-access.yaml
 
 deploynode:
 
