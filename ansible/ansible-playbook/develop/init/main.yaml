@@ -15,6 +15,7 @@
     - { src: '/opt/ikubernetes/ansible/files/env/sudoers', dest: '/etc/sudoers' }
     - { src: '/opt/ikubernetes/ansible/files/env/hosts', dest: '/etc/hosts' }
     - { src: '/opt/ikubernetes/ansible/files/env/CentOS7-Base-163.repo', dest: '/etc/yum.repos.d/CentOS7-Base-163.repo' }
+    - { src: '/opt/ikubernetes/ansible/files/env/epel.repo', dest: '/etc/yum.repos.d/epel.repo' }
   - name: yum install epel
     yum: name=epel-release state=present
   - name: close firewalld
