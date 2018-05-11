@@ -21,7 +21,6 @@
   - name: yum install python-pip yum-tools device-mapper lvm2
     yum: state=present name={{ item }}
     with_items:
-    - python-pip
     - yum-utils
     - device-mapper-persistent-data
     - lvm2
