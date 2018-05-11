@@ -27,7 +27,7 @@ init:
 deploymaster:
 	kubeadm reset && kubeadm init  --token-ttl 0 --apiserver-advertise-address=${local_ip}  --pod-network-cidr=10.244.0.0/16
 	mkdir -p ${HOME}/.kube
-	\cp -i /etc/kubernetes/admin.conf $(HOME)/.kube/config
+	\cp -f /etc/kubernetes/admin.conf $(HOME)/.kube/config
 	chown $(id -u):$(id -g) $(HOME)/.kube/config
 	export KUBECONFIG=/etc/kubernetes/kubelet.conf
 	kubectl apply -f  $(K8SROOT)/files/kube-flannel.yaml
@@ -35,8 +35,8 @@ deploymaster:
 
 deployUI:
 	kubectl create -f https://raw.githubusercontent.com/kubernetes/dashboard/master/src/deploy/recommended/kubernetes-dashboard.yaml
-	kubectl apply -f  $(K8SROOT)/files/kube-dashboard-access.yaml
-	kubectl proxy --address=${local_ip} --accept-hosts='^*$' &
+#	kubectl apply -f  $(K8SROOT)/files/kube-dashboard-access.yaml
+#	kubectl proxy --address=${local_ip} --accept-hosts='^*$' &
 	echo " 访问仪表盘URL: http://masterip:8001/api/v1/namespaces/kube-system/services/https:kubernetes-dashboard:/proxy"
 
 deploynode:
