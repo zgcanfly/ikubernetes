@@ -1,0 +1,15 @@
+---
+#install ntp on centos7
+
+- hosts: all_hosts
+  sudo: yes
+  sudo_user: root
+  tasks:
+  - name: Install ntp
+    yum: state=present name={{ item }}
+    with_items:
+    - ntp
+    - ntpdate
+    - ntp-doc
+  - name: calibration time
+    shell: ntpdate 0.cn.pool.ntp.org

@@ -117,51 +117,6 @@ echo "export KUBECONFIG=/etc/kubernetes/admin.conf" >>~/.bash_profile && source 
 
 
 
-仪表盘：
-vim dashboard.yaml                kubectl apply -f  dashboard.yaml
-
-kind: Service
-apiVersion: v1
-metadata:
-  labels:
-  k8s-app: kubernetes-dashboard
-  name: kubernetes-dashboard
-  namespace: kube-system
-spec:
-type: NodePort
-ports:
-- port: 80
-targetPort: 9090
-nodePort: 31000
-selector:
-  k8s-app: kubernetes-dashboard
-
-下载：
-
-
-    #1. kubectl create -f https://git.io/kube-dashboard
-             #kubectl delete  -f https://git.io/kube-dashboard
-    2. git clone https://github.com/kubernetes/heapster.git && cd heapster/
-
-    3. kubectl create -f dashboard-rbac.yaml
-kind: ClusterRoleBinding
-apiVersion: rbac.authorization.k8s.io/v1beta1
-metadata:
-  name: heapster
-roleRef:
-  apiGroup: rbac.authorization.k8s.io
-  kind: ClusterRole
-  name: system:heapster
-subjects:
-- kind: ServiceAccount
-  name: heapster
-  namespace: kube-system
-
-    4. cp deploy/kube-config/rbac/heapster-rbac.yaml deploy/kube-config/influxdb/
-
-    5. kubectl create -f deploy/kube-config/influxdb
-
-
 
 
 部署仪表盘
@@ -594,5 +549,4 @@ spec:
 
 
 
-
- kubeadm join 192.168.24.130:6443 --token y8lmnh.xmgli5grqkaj3kec --discovery-token-ca-cert-hash sha256:ce37295df2f0f87b2f37d3b5c991698eaa75e909a2fd1a0b7af6d5031353c699
+kubeadm join 192.168.24.130:6443 --token avcsno.hkve4gnjrcbptm4u --discovery-token-ca-cert-hash sha256:8119c97f10fc3020f4267953304cbd65f72df1b42156e1f957523d2a0710250b
