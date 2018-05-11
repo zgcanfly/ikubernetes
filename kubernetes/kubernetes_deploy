@@ -595,4 +595,4 @@ spec:
 
 
 
-kubeadm join 192.168.24.130:6443 --token 268u3l.bsoe58m3ukrs5qx9 --discovery-token-ca-cert-hash sha256:68503715181150cc267aa0f4138955a653e18725f93cbb5af40fa431dfd9d93e
+ kubeadm join 192.168.24.130:6443 --token y8lmnh.xmgli5grqkaj3kec --discovery-token-ca-cert-hash sha256:ce37295df2f0f87b2f37d3b5c991698eaa75e909a2fd1a0b7af6d5031353c699
