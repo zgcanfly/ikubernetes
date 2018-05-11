@@ -30,7 +30,7 @@ deploymaster:
 	cp -i /etc/kubernetes/admin.conf $(HOME)/.kube/config
 	chown $(id -u):$(id -g) $(HOME)/.kube/config
 	export KUBECONFIG=/etc/kubernetes/kubelet.conf
-	kubectl apply -f  $(K8SROOT)/files/kube-flannel.yml
+	kubectl apply -f  $(K8SROOT)/files/kube-flannel.yaml
 	iptables -P FORWARD ACCEPT
 
 deployUI:
