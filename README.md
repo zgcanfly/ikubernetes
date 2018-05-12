@@ -9,7 +9,7 @@
 
 
 ####   使用帮助:
-		1. 项目目录需要放在/opt 目录
+		1. 项目目录需要放在/opt 目录; cd /opt && git clone https://github.com/zgcanfly/ikubernetes.git
 		2. 需提前在ansible主机配置好ssh 无秘钥登入所有集群
 		3. vim /opt/ikubernetes/ansible/files/hosts    rewiret k8s_master机器
 		4. cd /opt/ikubernetes/ansible/ansible-playbook/develop/ansible-deploy && make deploy 即可部署ansible
