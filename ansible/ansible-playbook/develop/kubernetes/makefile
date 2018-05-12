@@ -3,15 +3,15 @@
 #date:2017_09_26
 #Deploy kubernetes on centos7.
 
-export MKROOT = /opt/ikubernetes
-export K8SROOT = /opt/ikubernetes/kubernetes
+export MKROOT = /opt/ikubernetes/ansible/files
+export K8SROOT = ${MKROOT}/kubernetes
 export local_ip = ${ip a|egrep "eth1|ens|eno16777736"|grep inet|awk '{print $2}'|awk -F "/" '{print $1}'}
 
 
 .PHONY: master node
 
 init:
-	cp $(K8SROOT)/repo/kubernetes.repo /etc/yum.repos.d/
+	cp $(K8SROOT)/kubernetes.repo /etc/yum.repos.d/
 	swapoff -a && sed -i '/swap/d' /etc/fstab
 	yum install -y kubelet kubeadm kubectl
 	sed -i "s/systemd/cgroupfs/g" /etc/systemd/system/kubelet.service.d/10-kubeadm.conf
@@ -30,7 +30,7 @@ deploymaster:
 	\cp -f /etc/kubernetes/admin.conf $(HOME)/.kube/config
 	chown $(id -u):$(id -g) $(HOME)/.kube/config
 	export KUBECONFIG=/etc/kubernetes/kubelet.conf
-	kubectl apply -f  $(K8SROOT)/files/kube-flannel.yaml
+	kubectl apply -f  $(K8SROOT)/kube-flannel.yaml
 	iptables -P FORWARD ACCEPT
 
 deployUI:
