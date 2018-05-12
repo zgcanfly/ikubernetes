@@ -1,0 +1,15 @@
+---
+# Deploy kubernetes master and node
+- hosts: k8s-master
+  sudo: yes
+  sudo_user: root
+  tasks:
+  - name: deploy k8s-master
+    shell:  cd /opt/ikubernetes/ansible/ansible-playbook/develop/kubernetes && make master >> deploy.log
+
+- hosts: k8s-node
+  sudo: yes
+  sudo_user: root
+  tasks:
+  - name: deploy k8s-node
+    shell: cd /opt/ikubernetes/ansible/ansible-playbook/develop/kubernetes && make node >>deploy.log

@@ -1,6 +1,6 @@
 #author zgyang
 #date:2017_09_26
-#Deploy ansible on centos7.
+#Deploy ansible on Centos7 or Ubuntu.
 
 export MKROOT = /opt/ikubernetes
 
