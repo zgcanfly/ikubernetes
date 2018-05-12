@@ -549,4 +549,4 @@ spec:
 
 
 
-kubeadm join 192.168.24.130:6443 --token avcsno.hkve4gnjrcbptm4u --discovery-token-ca-cert-hash sha256:8119c97f10fc3020f4267953304cbd65f72df1b42156e1f957523d2a0710250b
+kubeadm join 192.168.24.130:6443 --token y13ld5.2ht70ns2fg1imsfq --discovery-token-ca-cert-hash sha256:698dbc9783f99cf3cc23a4818396f06f30bf30083f770593ddd52e5a1c85900d
