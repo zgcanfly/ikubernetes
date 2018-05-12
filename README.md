@@ -27,6 +27,7 @@
                 入口文件改为makefile完成ansible主机的初始化 后续功能全部由ansible实现
 
 **目录介绍:**
+###### 注:
             1.ikubernetes/ansible/ansible-playbook/develop/ansible-deploy  完成ansible部署
             2.ikubernetes/ansible/ansible-playbook/develop/init  完成所有机器的环境部署
             3.ikubernetes/ansible/ansible-playbook/develop/docker  完成所有机器docker部署
