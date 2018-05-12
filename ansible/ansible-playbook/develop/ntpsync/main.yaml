@@ -14,4 +14,4 @@
   - name: calibration time
     shell: ntpdate 0.cn.pool.ntp.org
   - name: crontab of ntpsync
-    cron: name=check minute=5 job="ntpdate 0.cn.pool.ntp.org"
+    cron: name="check date" minute=5 job="ntpdate 0.cn.pool.ntp.org"
