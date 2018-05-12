@@ -14,17 +14,10 @@
 		3.修改ikubernetes/ansible/files/hosts文件中的k8s_master 机器
 		4.进入ikubernetes/ansible/ansible-playbook/develop/ansible-deploy
 			执行 make deploy 即可部署ansible
-		5.
-            待更新...
+		5.待更新...
 
-**文件介绍:**
-            ansible 已经基本完成docker的环境部署
-            makefile 基本完成kubernetes 的部署
 
-            待更新...
-                ansible完成代替makefile的功能
-                更多的平台兼容:ubuntu centos ..
-                入口文件改为makefile完成ansible主机的初始化 后续功能全部由ansible实现
+
 
 **目录介绍:**
 ###### 注:
@@ -34,3 +27,12 @@
             4.ikubernetes/ansible/ansible-playbook/develop/clean  完成所有机器获取本项目到目标机器
             5.ikubernetes/ansible/ansible-playbook/develop/ntpsynv  完成所有机器的时间同步
             6.ikubernetes/ansible/ansible-playbook/develop/kubernetes  完成master和node节点的部署
+
+**文件介绍:**
+            ansible 已经基本完成docker的环境部署
+            makefile 基本完成kubernetes 的部署
+
+            待更新...
+                ansible完成代替makefile的功能
+                更多的平台兼容:ubuntu centos ..
+                入口文件改为makefile完成ansible主机的初始化 后续功能全部由ansible实现
