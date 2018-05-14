@@ -18,7 +18,7 @@
 		7. cd /opt/ikubernetes/ansible/ansible-playbook/develop/clean && ansible-playbook main.yaml
 		8. cd /opt/ikubernetes/ansible/ansible-playbook/develop/kubernetes && ansible-playbook main.yaml
 		9. cd /opt/ikubernetes/ansible/ansible-playbook/develop/kubernetes && cat deploy.log |grep "join"   && 查看 kubernetes join 并 ssh ${node} 节点执行
-		10. ssh ${k8s-master} && kubectl get node ;
+		10. ssh ${k8s-master} && kubectl get node  ; 部署完成
 
 
 
@@ -28,4 +28,4 @@
             2. /opt/ikubernetes/ansible/ansible-playbook/develop/init  完成所有机器的环境部署
             3. /opt/ikubernetes/ansible/ansible-playbook/develop/docker  完成所有机器docker部署
             4. /opt/ikubernetes/ansible/ansible-playbook/develop/clean  完成所有机器获取本项目到目标机器
-            6. /opt/ikubernetes/ansible/ansible-playbook/develop/kubernetes  完成master和node节点的部署
+            5. /opt/ikubernetes/ansible/ansible-playbook/develop/kubernetes  完成master和node节点的部署
