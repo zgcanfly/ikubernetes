@@ -73,3 +73,10 @@
     - openssl-devel
     - nfs-utils
     - psmisc
+    - ntp
+    - ntpdate
+    - ntp-doc
+  - name: calibration time
+    shell: ntpdate 0.cn.pool.ntp.org
+  - name: crontab of ntpsync
+    cron: name="check date" minute=5 job="ntpdate 0.cn.pool.ntp.org"
