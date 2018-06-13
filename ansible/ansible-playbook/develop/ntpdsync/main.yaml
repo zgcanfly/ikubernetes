@@ -1,0 +1,10 @@
+---
+# sync date
+- hosts: all_hosts
+  sudo: yes
+  sudo_user: root
+  tasks:
+  - name: calibration time
+    shell: ntpdate 0.cn.pool.ntp.org
+  - name: crontab of ntpsync
+    cron: name="check date" minute=5 job="ntpdate 0.cn.pool.ntp.org"
